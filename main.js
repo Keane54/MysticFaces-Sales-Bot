@@ -125,7 +125,7 @@ client.once('ready', () => {
     }
 
     // Runs getSalesData every X amount of milliseconds.
-    setInterval(getSalesData, 10000)
+    setInterval(getSalesData, 1000 * 60 * 30)
 });
 
 
