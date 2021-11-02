@@ -42,7 +42,7 @@ const timeStampConverter = (unixTimeStamp) => {
     const month = months[unixTimeStamp.getMonth()];
     const day = unixTimeStamp.getDate();
     const hours = unixTimeStamp.getUTCHours();
-    const minutes = unixTimeStamp.getMinutes();
+    const minutes = String(unixTimeStamp.getMinutes()).padStart(2, "0");
 
     // Return formatted string.
     return `${day}-${month}-${year} / ${hours}:${minutes}`
@@ -63,7 +63,7 @@ const getSalesData = async () => {
     if (events.asset_events != 0) {
 
         events.asset_events.forEach(element => {
-
+            console.log(element.transaction.timestamp)
 
             let sellerUsername = " ";
             const sellerAddress = element.seller.address;
@@ -103,4 +103,4 @@ const getSalesData = async () => {
     /*getDateAndStore();*/
 }
 
-getSalesData();
+getSalesData()
