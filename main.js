@@ -48,6 +48,22 @@ const retrieveDate = () => {
     return date;
 }
 
+// Unix timestamp converter to give readable date and time formats.
+const timeStampConverter = (unixTimeStamp) => {
+
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+    // Gets day/month/year/time.
+    const year = unixTimeStamp.getFullYear();
+    const month = months[unixTimeStamp.getMonth()];
+    const day = unixTimeStamp.getDate();
+    const hours = unixTimeStamp.getUTCHours();
+    const minutes = unixTimeStamp.getMinutes();
+
+    // Return formatted string.
+    return `${day}-${month}-${year} / ${hours}:${minutes}`
+}
+
 // Will run program when bot is online and ready.
 client.once('ready', () => {
 	console.log('Mystic Faces sales bot online.');
@@ -84,6 +100,7 @@ client.once('ready', () => {
                 const price = `${element.total_price * Math.pow(10, -18)} ETH`;
                 const imageURL = element.asset.image_preview_url;
                 const nftName = element.asset.name;
+                const timestamp = timeStampConverter(new Date(element.transaction.timestamp));
     
                 // Stops error if seller username is null and sets to 'Unnamed'.
                 if (element.seller.user.username == null) {
@@ -102,7 +119,7 @@ client.once('ready', () => {
                 // Embed structure to use for sending sales data.
                 const salesDataEmbed = new MessageEmbed()
                     .setTitle("New sale for Mystic Faces on Opensea!")
-                    .setDescription(`${nftName} was sold for ${[price]}.`)
+                    .setDescription(`${nftName} was sold for ${[price]} on ${timestamp}.`)
                     .addFields(
                         { name: 'Seller', value: `${sellerUsername}`},
                         { name: 'Seller Address', value:`${sellerAddress}`},
